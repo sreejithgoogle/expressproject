@@ -21,6 +21,10 @@ If you are a windows10 user download mongodb from below site :
 
 step1 : "https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/"
 
+or
+
+step1 : "https://www.youtube.com/watch?v=ll2tY6KH8Tk" (It's video tutorial for install mangodb in windows10)
+
 step2 : use customerapp
 
 step3 : db.createCollection('users')
