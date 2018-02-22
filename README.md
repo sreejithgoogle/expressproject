@@ -38,6 +38,8 @@ step4  : sudo apt-get install -y --allow-unauthenticated mongodb-org
 step5  : sudo nano /etc/systemd/system/mongodb.service  (copy paste below code to open file)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 [Unit]
 Description=High-performance, schema-free document-oriented database
 After=network.target
@@ -48,6 +50,8 @@ ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
 
 [Install]
 WantedBy=multi-user.target
+
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 step6  : sudo systemctl start mongodb
