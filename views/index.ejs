@@ -1,28 +1,34 @@
 <% include partials/header %>
-    <h1>Add Customer</h1>
-    <% if(errors){ %>
-        <ul>
-            <% errors.forEach(function(error){ %>
-                <li><%= error.msg %></li>
-            <% }) %>
-        </ul>
+<h1>Add Customer</h1>
+<% if(errors){ %>
+    <ul>
+    <% errors.forEach(function(error){ %>
+    <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
     <% } %>
-    <form method="POST" action="/users/add">
-        <label>First Name</label>
-        <input type="text" name="first_name"/>
-        <br>
+<form method="POST" action="/users/add">
+    <label>First Name</label>
+    <input type="text" name="first_name"/>
+    <br>
         <label>last Name</label>
         <input type="text" name="last_name"/>
         <br>
-        <label>Email</label>
-        <input type="text" name="email"/>
-        <br><br>
-        <input type="submit" value="Submit"/>
-    </form>
+            <label>Email</label>
+            <input type="text" name="email"/>
+            <br><br>
+                <input type="submit" value="Submit"/>
+                <% if(errors){ %>
+                <a href="/" style="text-decoration: none;"><input type="button" name="back" value="Back" /></a>
+                <% } %>
+</form>
+
+<% if(!errors){ %>
     <h1><%= title %></h1>
-    <ul>
-        <% users.forEach(function(user){ %>
-            <li><%= user.first_name %> <%= user.last_name %> - <a href="#" data-id="<%= user._id %>" class="deleteuser">Delete</a></li>
-        <% }) %>
-    </ul>
+    <% } %>
+<ul>
+    <% users.forEach(function(user){ %>
+    <li><%= user.first_name %> <%= user.last_name %> - <a href="#" data-id="<%= user._id %>" class="deleteuser">Delete</a></li>
+    <% }) %>
+</ul>
 <% include partials/footer %>
