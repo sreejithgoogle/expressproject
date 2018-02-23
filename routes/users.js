@@ -2,20 +2,36 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var expressValidator = require('express-validator');
-var mongojs = require('mongojs');
+var loaduser = require('../models/user');
+/*var mongojs = require('mongojs');
 var db = mongojs('customerapp', ['users']);
-var ObjectId = mongojs.ObjectId;
+var ObjectId = mongojs.ObjectId;*/
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/customerapp');
+var db = mongoose.connection;
+
+/*db.once('open', function () {
+    console.log('connected to MongoDB');
+});
+
+db.on('error', function (err) {
+    console.log(err)
+});*/
+
+var User = require('../models/user');
+
 var app = express();
 
-app.get('/', function (req, res) {
+app.use("/",loaduser);
 
-    db.users.find(function (err, docs) {
+// app.get('/',function (req, res) {
+    /*User.find({}, function (err, docs) {
         res.render('user/list', {
             title: 'Customer List',
             users: docs
         });
-    })
-});
+    })*/
+// });
 
 app.get('/add', function(req, res, next){
     // render to views/user/add.ejs
@@ -27,7 +43,9 @@ app.get('/add', function(req, res, next){
     })
 });
 
-app.post('/add', function (req, res) {
+app.use("/add",loaduser);
+
+/*app.post('/add', function (req, res) {
 
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
@@ -50,19 +68,21 @@ app.post('/add', function (req, res) {
             email: req.body.email
         }
 
-        db.users.insert(newUser, function (err, result) {
+        User.create(newUser, function (err, result) {
             if(err){
                 console.log(err);
             }
-            res.redirect('/');
+            res.redirect('/users');
         });
     }
 
-});
+});*/
 
-app.get('/edit/:id', function (req, res) {
-    var o_id = new ObjectId(req.params.id)
-    db.users.findOne({_id: o_id}, function (err, result) {
+app.use("/edit/:id",loaduser);
+
+/*app.get('/edit/:id', function (req, res) {
+    var o_id = req.params.id;
+    User.findById({_id: o_id}, function (err, result) {
         if(err){
             console.log(err);
         }
@@ -76,9 +96,11 @@ app.get('/edit/:id', function (req, res) {
             })
         }
     });
-});
+});*/
 
-app.post('/edit/:id', function (req, res) {
+app.use("/edit/:id",loaduser);
+
+/*app.post('/edit/:id', function (req, res) {
 
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
@@ -104,24 +126,26 @@ app.post('/edit/:id', function (req, res) {
             last_name: req.body.last_name,
             email: req.body.email
         }
-        var o_id = new ObjectId(req.params.id)
-        db.users.update({_id: o_id}, updateUser, function (err, result) {
+        var o_id = req.params.id;
+        User.findByIdAndUpdate({_id: o_id}, updateUser, function (err, result) {
             if(err){
                 console.log(err);
             }
             res.redirect('/users');
         });
     }
-});
+});*/
 
-app.delete('/delete/:id', function (req, res) {
-    db.users.remove({_id: ObjectId(req.params.id)}, function (err, result) {
+app.use("/delete/:id",loaduser);
+
+/*app.delete('/delete/:id', function (req, res) {
+    User.remove({_id: req.params.id}, function (err, result) {
         if(err){
             console.log(err);
         }
         res.redirect('/users');
     });
-});
+});*/
 
 module.exports = app;
 
