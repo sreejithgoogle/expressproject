@@ -41,7 +41,7 @@ router.post('/add', function (req, res) {
 
     if(errors){
         res.render('user/add', {
-            title: 'Add New User',
+            title: 'Add New Customer',
             users: users,
             errors: errors
         });
