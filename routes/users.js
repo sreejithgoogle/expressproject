@@ -22,7 +22,13 @@ var User = require('../models/user');
 
 var app = express();
 
+/* function for list customers */
+
 app.use("/",loaduser);
+
+/* function for list customers */
+
+/* function for add view page */
 
 app.get('/add', function(req, res, next){
     // render to views/user/add.ejs
@@ -34,13 +40,31 @@ app.get('/add', function(req, res, next){
     })
 });
 
+/* function for add view page */
+
+/* function for add customer */
+
 app.use("/add",loaduser);
 
-app.use("/edit/:id",loaduser);
+/* function for add customer */
+
+/* function for edit view page */
 
 app.use("/edit/:id",loaduser);
+
+/* function for edit view page */
+
+/* function for edit customer */
+
+app.use("/edit/:id",loaduser);
+
+/* function for edit customer */
+
+/* function for delete customer */
 
 app.use("/delete/:id",loaduser);
+
+/* function for delete customer */
 
 module.exports = app;
 

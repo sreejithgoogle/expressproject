@@ -20,6 +20,8 @@ var userSchema = mongoose.Schema({
 
 var User = module.exports = mongoose.model('User', userSchema);
 
+/* function for list customers */
+
 router.get('/',function (req, res) {
     User.find({}, function (err, docs) {
      res.render('user/list', {
@@ -28,6 +30,10 @@ router.get('/',function (req, res) {
      });
      })
 });
+
+/* function for list customers */
+
+/* function for add customer */
 
 router.post('/add', function (req, res) {
 
@@ -62,6 +68,10 @@ router.post('/add', function (req, res) {
 
 });
 
+/* function for add customer */
+
+/* function for edit view page */
+
 router.get('/edit/:id', function (req, res) {
     var o_id = req.params.id;
     User.findById({_id: o_id}, function (err, result) {
@@ -79,6 +89,10 @@ router.get('/edit/:id', function (req, res) {
         }
     });
 });
+
+/* function for edit view page */
+
+/* function for edit customer */
 
 router.post('/edit/:id', function (req, res) {
 
@@ -116,6 +130,10 @@ router.post('/edit/:id', function (req, res) {
     }
 });
 
+/* function for edit customer */
+
+/* function for delete customer */
+
 router.delete('/delete/:id', function (req, res) {
     User.remove({_id: req.params.id}, function (err, result) {
         if(err){
@@ -124,5 +142,7 @@ router.delete('/delete/:id', function (req, res) {
         res.redirect('/users');
     });
 });
+
+/* function for delete customer */
 
 module.exports = router;
