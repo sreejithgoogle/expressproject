@@ -1,50 +1,11 @@
 <% include partials/header %>
-<h1>Add Customer</h1>
-<% if(errors){ %>
-    <ul>
-    <% errors.forEach(function(error){ %>
-    <li><%= error.msg %></li>
-    <% }) %>
-    </ul>
-    <% } %>
-<form method="POST" action="/users/add">
-    <table width="25%" border="0">
-    <tr>
-        <td><label>First Name</label></td>
-        <td><input type="text" name="first_name"/></td>
-    </tr>
-    <tr>
-        <td><label>last Name</label></td>
-        <td><input type="text" name="last_name"/></td>
-    </tr>
-    <tr>
-        <td><label>Email</label></td>
-        <td><input type="text" name="email"/></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td><input type="submit" value="Submit"/>
-            <% if(errors){ %>
-                <a href="/" style="text-decoration: none;"><input type="button" name="back" value="Back" /></a>
-                <% } %></td>
-    </tr>
-    </table>
-</form>
-
-<% if(!errors){ %>
-    <h1><%= title %></h1>
-    <% } %>
+<h1><%= title %></h1>
 <table width="80%" border="0">
-    <% if(!errors){ %>
-    <tr style="text-align:left;">
-        <th>Name</th>
-        <th>Action</th>
-    </tr>
-    <% } %>
-    <% users.forEach(function(user){ %>
+
     <tr>
-    <td><%= user.first_name %> <%= user.last_name %> </td> <td> <a href="/edit/<%= user._id %>" >Edit</a></li> <a href="#" data-id="<%= user._id %>" class="deleteuser">Delete</a></td>
+        <td>List All Customers <a href="/users">click here</a></td>
+        <td>Add a New Customer <a href="/users/add">click here</a></td>
     </tr>
-    <% }) %>
+
 </table>
 <% include partials/footer %>

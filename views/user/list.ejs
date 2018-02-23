@@ -1,0 +1,16 @@
+<% include ../partials/header %>
+<span style="margin-left:450px;"><a href="/">Home</a></span>
+<span style="margin-left:50px;"><a href="/users/add">Add New Customer</a></span>
+<h1><%= title %></h1>
+<table width="80%" border="0">
+    <tr style="text-align:left;">
+    <th>Name</th>
+    <th>Action</th>
+    </tr>
+    <% users.forEach(function(user){ %>
+    <tr>
+    <td><%= user.first_name %> <%= user.last_name %> </td> <td> <a href="users/edit/<%= user._id %>" >Edit</a></li> <a href="#" data-id="<%= user._id %>" class="deleteuser">Delete</a></td>
+    </tr>
+    <% }) %>
+</table>
+<% include ../partials/footer %>

@@ -7,55 +7,27 @@ var db = mongojs('customerapp', ['users']);
 var ObjectId = mongojs.ObjectId;
 var app = express();
 
-// View Engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-/**
- * import routes/users.js
- */
-var users = require('./routes/users')
-
-// Body Parser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-//Get Static Path
-app.use(express.static(path.join(__dirname, 'public')))
-
-// Global Vars
-
-app.use(function (req, res, next) {
-    res.locals.errors = null;
-    next();
-});
-
-// Express Validator Middleware
-app.use(expressValidator({
-    errorFormatter: function (param, msg, value) {
-        var namespace = param.split('.')
-            , root = namespace.shift()
-            , formParam = root;
-
-        while(namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param : formParam,
-            msg : msg,
-            value : value
-        }
-    }
-}));
-
 app.get('/', function (req, res) {
 
-        res.render('index', {
-            title: 'Welcome To Customer Managment APP'
+    db.users.find(function (err, docs) {
+        res.render('user/list', {
+            title: 'Customer List',
+            users: docs
         });
+    })
 });
 
- /*app.post('/users/add', function (req, res) {
+app.get('/add', function(req, res, next){
+    // render to views/user/add.ejs
+    res.render('user/add', {
+        title: 'Add New Customer',
+        name: '',
+        age: '',
+        email: ''
+    })
+});
+
+app.post('/add', function (req, res) {
 
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
@@ -66,8 +38,8 @@ app.get('/', function (req, res) {
     var errors = req.validationErrors();
 
     if(errors){
-        res.render('index', {
-            title: 'Customers',
+        res.render('user/add', {
+            title: 'Add New User',
             users: users,
             errors: errors
         });
@@ -95,8 +67,8 @@ app.get('/edit/:id', function (req, res) {
             console.log(err);
         }
         if(result){
-            res.render('edit', {
-                title: 'Customers',
+            res.render('user/edit', {
+                title: 'Edit Customer',
                 id: result._id,
                 first_name: result.first_name,
                 last_name: result.last_name,
@@ -106,7 +78,7 @@ app.get('/edit/:id', function (req, res) {
     });
 });
 
-app.post('/users/edit/:id', function (req, res) {
+app.post('/edit/:id', function (req, res) {
 
     req.checkBody('first_name', 'First Name is Required').notEmpty();
     req.checkBody('last_name', 'Last Name is Required').notEmpty();
@@ -117,8 +89,8 @@ app.post('/users/edit/:id', function (req, res) {
     var errors = req.validationErrors();
 
     if(errors){
-        res.render('edit', {
-            title: 'Customers',
+        res.render('user/edit', {
+            title: 'Edit Customer',
             id: req.params.id,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -137,22 +109,19 @@ app.post('/users/edit/:id', function (req, res) {
             if(err){
                 console.log(err);
             }
-            res.redirect('/');
+            res.redirect('/users');
         });
     }
 });
 
-app.delete('/users/delete/:id', function (req, res) {
+app.delete('/delete/:id', function (req, res) {
     db.users.remove({_id: ObjectId(req.params.id)}, function (err, result) {
         if(err){
             console.log(err);
         }
-        res.redirect('/');
+        res.redirect('/users');
     });
-});*/
+});
 
-app.use('/users', users);
+module.exports = app;
 
-app.listen(3000, function () {
-    console.log('Server Started on port 3000....');
-})

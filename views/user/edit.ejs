@@ -1,5 +1,7 @@
-<% include partials/header %>
-<h1>Edit Customer</h1>
+<% include ../partials/header %>
+<span style="margin-left:450px;"><a href="/">Home</a></span>
+<span style="margin-left:50px;"><a href="/users">List Customers</a></span>
+<h1><%= title %></h1>
 <% if(errors){ %>
     <ul>
     <% errors.forEach(function(error){ %>
@@ -24,8 +26,8 @@
         <tr>
             <td></td>
             <td><input type="submit" value="Submit"/>
-                <a href="/" style="text-decoration: none;"><input type="button" name="back" value="Back" /></a></td>
+                <a href="/users" style="text-decoration: none;"><input type="button" name="back" value="Back" /></a></td>
         </tr>
     </table>
 </form>
-<% include partials/footer %>
+<% include ../partials/footer %>
